@@ -427,7 +427,7 @@ class Pan123Database:
         except Exception as e:
             logger.error(f"更新 visibleFlag 失败 (codeHash: {codeHash}): {e}", exc_info=True)
             return False
- 
+
     def updateRootFolderName(self, codeHash: str, newRootFolderName: str):
         # 更新 rootFolderName 时，需要同步更新 FTS 表中的 searchText
         # 获取 shareCode 以重新生成 searchText
@@ -469,18 +469,6 @@ class Pan123Database:
             self.conn.rollback() # 回滚事务
             logger.error(f"更新 rootFolderName (codeHash: {codeHash}) 或其FTS索引失败: {e}", exc_info=True)
             return False
-
-    def makeFullJson(self):
-        # SELECT rootFolderName, shareCode WHERE visibleFlag=True
-        self.database.execute("SELECT rootFolderName, shareCode FROM PAN123DATABASE WHERE visibleFlag=True")
-        row = self.database.fetchall()
-        json_data = []
-        for rootFolderName, shareCode in row:
-            random_id = uuid.uuid4()
-            file_dicts = json.loads(base64.urlsafe_b64decode(shareCode))
-            print(shareJson)
-            break
-        return 0
 
     def close(self):
         if self.conn:

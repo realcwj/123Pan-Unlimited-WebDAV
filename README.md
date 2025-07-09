@@ -62,13 +62,11 @@
 
 ### Windows端本地一键部署
 
-- ~~请见 [>>> 123云盘 无限制分享工具（本地部署文档） <<<](docs/LOCAL_DEPLOY.md)~~
-
-- 文档还没写🤪
+- 请见 [>>> 123云盘 无限制挂载工具（Windows部署文档） <<<](docs/WINDOWS_DEPLOY.md)
 
 ### Linux端(服务器)部署
 
-- ~~请见 [>>> 123云盘无限制分享工具（服务器 `gunicorn` 部署教程） <<<](docs/WEB_DEPLOY.md)~~
+- 请见 [>>> 123云盘无限制挂载工具（Linux(服务器)部署文档） <<<](docs/LINUX_DEPLOY.md)
 
 - 文档还没写🤪
 
