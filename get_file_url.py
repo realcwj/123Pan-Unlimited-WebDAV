@@ -1,0 +1,88 @@
+from Pan123 import Pan123
+import base64
+import requests
+import yaml
+
+def get_file_url(name, etag, size) -> str:
+    # 读取配置文件
+    with open("settings.yaml", "r", encoding="utf-8") as f:
+        settings_data = yaml.safe_load(f.read())
+    # 实例化
+    driver = Pan123()
+    # 登录账号
+    driver.doLogin(
+        username=settings_data.get("123PAN_USERNAME"),
+        password=settings_data.get("123PAN_PASSWORD")
+    )
+    # 上传文件
+    action_result = driver.uploadFile(
+                            etag=etag,
+                            fileName=name,
+                            parentFileId=0,
+                            size=size,
+                            raw_data=True
+                        )
+    if action_result.get("isFinish"):
+        file_data = action_result.get("message").get("Info")
+        # print(file_data)
+    else:
+        print(action_result.get("message"))
+        return None
+    # 获取下载地址
+    action_result = driver.downloadFile(
+        etag=file_data.get("Etag"),
+        fileId=file_data.get("FileId"),
+        S3KeyFlag=file_data.get("S3KeyFlag"),
+        type=file_data.get("Type"),
+        fileName=file_data.get("FileName"),
+        size=file_data.get("Size")
+    )
+    if action_result.get("isFinish"):
+        download_link = action_result.get("message")
+        # print(download_link)
+    else:
+        print(action_result.get("message"))
+        return "http://222.186.21.40:33333/NGGYU.mp4"
+    # 删除文件
+    action_result = driver.deleteFile([file_data.get('Info')])
+    if action_result.get("isFinish"):
+        pass
+        # print(action_result)
+    else:
+        print(action_result.get("message"))
+        return None
+    # 退出登录
+    driver.doLogout()
+    # 获取跳转后的链接
+    real_url = download_link.split("params=")[-1].split("&")[0]
+    real_url = base64.b64decode(real_url).decode("utf-8")
+    # 判断该链接是不是最终链接
+    headers = {"Referer": "https://www.123pan.com/"}
+    response = requests.get(real_url, headers=headers, allow_redirects=False)
+    if response.status_code == 302:
+        # 如果是 302 重定向，从 'Location' 头获取最终 URL
+        final_url = response.headers.get("location")
+    elif response.status_code < 300:
+        # 如果是成功状态码 (如 200 OK)，解析 JSON
+        try:
+            data = response.json()
+            final_url = data.get("data").get("redirect_url")
+        except requests.exceptions.JSONDecodeError:
+            print("Status was 2xx, but failed to decode JSON response.")
+            return None
+    else:
+        # 其他非成功状态码
+        print(f"Request failed with status code: {response.status_code}")
+        return None
+    
+    print(f"获取到 {name} 的真实 URL: {final_url}")
+
+    return final_url
+
+
+
+if __name__ == "__main__":
+    name = "提灯映桃花 晚安时间到·楚河（CV：袁铭喆）微博@种草小呆萌.mp4"
+    etag = "df5f8f335a1043be16e3e6e8f83c3072"
+    size = 552721
+    get_file_url(name=name, etag=etag, size=size)

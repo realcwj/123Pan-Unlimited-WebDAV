@@ -1,0 +1,33 @@
+# 文件夹结构示例：
+# 123Pan-Unlimited-WebDAV/
+# ├── main.exe
+# ├── PAN123DATABASE.db
+# └── settings.yaml
+
+
+# 最新数据库下载地址: https://github.com/realcwj/123Pan-Unlimited-Share/releases/tag/database
+# 注意: 
+# - 更新数据库, 文件夹索引可能会改变
+# - 你需要进入挂载WebDAV的播放器（比如，网易爆米花、VidHub、Infuse等），重新搜索资源、重新刮削
+
+
+# 数据库路径（保持默认即可，如果报错再按照下面示例修改）
+# Windows 填写示例(填写完整路径，从盘符开始): X:/.../PAN123DATABASE.db
+# Linux 填写示例(填写完整路径，从/开始): /home/username/.../PAN123DATABASE.db
+DATABASE_PATH: "./PAN123DATABASE.db"
+
+
+# WebDAV 账号
+WEBDAV_USERNAME: "admin"
+# WebDAV 密码
+WEBDAV_PASSWORD: "123456"
+# WebDAV IP (保持默认即可)
+WEBDAV_HOST: "0.0.0.0"
+# WebDAV 端口
+WEBDAV_PORT: "8000"
+
+
+# 123云盘账号
+123PAN_USERNAME: "13566666666"
+# 123云盘密码
+123PAN_PASSWORD: "123456"
