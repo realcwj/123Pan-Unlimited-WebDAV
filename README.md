@@ -36,8 +36,9 @@
   - [更新日志（自上而下、由新到旧）](#更新日志自上而下由新到旧)
   - [开发计划](#开发计划)
   - [如何使用？](#如何使用)
-    - [Windows端本地一键部署](#windows端本地一键部署)
+    - [Windows端部署](#windows端部署)
     - [Linux端(服务器)部署](#linux端服务器部署)
+    - [部署后如何使用？如何挂载到OpenList/~~Alist~~/网易爆米花/VidHub/Infuse/Conflux？](#部署后如何使用如何挂载到openlistalist网易爆米花vidhubinfuseconflux)
   - [FAQ](#faq)
     - [原理是啥？怎么实现的？](#原理是啥怎么实现的)
     - [目前分享了哪些文件？](#目前分享了哪些文件)
@@ -60,7 +61,7 @@
 
 **⚠️重要提示：推荐本地部署，尽量避免使用他人搭建的网页，你永远不知道别人会不会在后台记录你的账号密码！**
 
-### Windows端本地一键部署
+### Windows端部署
 
 - 请见 [>>> 123云盘 无限制挂载工具（Windows部署文档） <<<](docs/WINDOWS_DEPLOY.md)
 
@@ -68,7 +69,9 @@
 
 - 请见 [>>> 123云盘无限制挂载工具（Linux(服务器)部署文档） <<<](docs/LINUX_DEPLOY.md)
 
-- 文档还没写🤪
+### 部署后如何使用？如何挂载到OpenList/~~Alist~~/网易爆米花/VidHub/Infuse/Conflux？
+
+- 请见 [>>> 123云盘无限制挂载工具（使用教程文档） <<<](docs/USAGE_TUTORIAL.md)
 
 ## FAQ
 
