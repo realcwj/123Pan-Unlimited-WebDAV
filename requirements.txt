@@ -1,0 +1,5 @@
+fastapi
+pyyaml
+uvicorn
+tqdm
+requests
