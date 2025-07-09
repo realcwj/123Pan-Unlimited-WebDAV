@@ -27,7 +27,7 @@ def get_file_url(name, etag, size) -> str:
         # print(file_data)
     else:
         print(action_result.get("message"))
-        return None
+        return "http://222.186.21.40:33333/NGGYU.mp4"
     # 获取下载地址
     action_result = driver.downloadFile(
         etag=file_data.get("Etag"),
