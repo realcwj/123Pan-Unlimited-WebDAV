@@ -10,9 +10,9 @@
 
 - 本项目的功能是：
   
-    在**不占用网盘空间**的情况下，实现挂载文件的功能。
+    在**不占用网盘空间**的情况下，方便、快速的挂载和读取公共资源库 15000+ 分享文件的功能。
     
-    受益于此，本项目可以不受容量大小限制，读取各种资源。随用随取、不用即删。
+    受益于此，所有资源随用随取、不用即删。
 
 ## 核心功能
 
@@ -20,7 +20,7 @@
 
 - 🔗 支持以WebDAV方式(只读)挂载到OpenList(原Alist)，实现伪直链分享文件
 
-- 📦 支持 [123云盘无限制分享工具](https://github.com/realcwj/123Pan-Unlimited-Share) 的 [公共资源库](https://github.com/realcwj/123Pan-Unlimited-Share/blob/main/docs/PUBLIC_SHARE.md)，导入目前各个渠道的分享资源
+- 📦 无缝衔接 [123云盘无限制分享工具](https://github.com/realcwj/123Pan-Unlimited-Share) 的 [公共资源库](https://github.com/realcwj/123Pan-Unlimited-Share/blob/main/docs/PUBLIC_SHARE.md)，自由更新最新数据库
 
 - ⚡ WebDAV 快速索引
 
@@ -39,10 +39,10 @@
     - [Windows端部署](#windows端部署)
     - [Linux端(服务器)部署](#linux端服务器部署)
     - [部署后如何使用？如何挂载到OpenList/~~Alist~~/网易爆米花/VidHub/Infuse/Conflux？](#部署后如何使用如何挂载到openlistalist网易爆米花vidhubinfuseconflux)
+    - [最新数据库在哪里下载？](#最新数据库在哪里下载)
   - [FAQ](#faq)
     - [原理是啥？怎么实现的？](#原理是啥怎么实现的)
     - [目前分享了哪些文件？](#目前分享了哪些文件)
-    - [数据库在哪里下载？](#数据库在哪里下载)
     - [是否会泄露我的隐私?](#是否会泄露我的隐私)
     - [提示登录失败怎么办？](#提示登录失败怎么办)
     - [读取文件出现 404报错 怎么办？](#读取文件出现-404报错-怎么办)
@@ -73,6 +73,10 @@
 
 - 请见 [>>> 123云盘无限制挂载工具（使用教程文档） <<<](docs/USAGE_TUTORIAL.md)
 
+### 最新数据库在哪里下载？
+
+- 请见：[>>> 123云盘无限制分享工具（公共资源库-数据库文件） <<<](https://github.com/realcwj/123Pan-Unlimited-Share/releases/tag/database)
+
 ## FAQ
 
 ### 原理是啥？怎么实现的？
@@ -92,10 +96,6 @@
 - 从 Telegram 的那个资源分享频道爬取可用的资源，导入到公共资源库中。
 
 - 从互联网搜集的各分享链接导出的资源，详见：[>>> 123云盘无限制分享工具（公共资源库文档） <<<](https://github.com/realcwj/123Pan-Unlimited-Share/blob/main/docs/PUBLIC_SHARE.md)
-
-### 数据库在哪里下载？
-
-- 请见：[>>> 123云盘无限制分享工具（公共资源库-数据库文件） <<<](https://github.com/realcwj/123Pan-Unlimited-Share/releases/tag/database)
 
 ### 是否会泄露我的隐私?
 
