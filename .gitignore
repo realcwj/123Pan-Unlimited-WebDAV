@@ -1,2 +1,6 @@
 __pycache__
 PAN123DATABASE.db
+main.build
+main.dist
+main.onefile-build
+main.exe
