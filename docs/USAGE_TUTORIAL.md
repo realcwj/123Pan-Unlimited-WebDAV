@@ -6,7 +6,8 @@
   - [目录](#目录)
   - [省流小助手](#省流小助手)
   - [在 Windows 文件资源管理器中挂载](#在-windows-文件资源管理器中挂载)
-  - [在网易爆米花(原Filmly)中挂载](#在网易爆米花原filmly中挂载)
+  - [在 网易爆米花(原Filmly) 中挂载](#在-网易爆米花原filmly-中挂载)
+  - [在 OpenList(原Alist) 中挂载](#在-openlist原alist-中挂载)
 
 ## 省流小助手
 
@@ -28,7 +29,7 @@
 
     ![](images/USAGE_TUTORIAL/WINDOWS/3.png)
 
-## 在网易爆米花(原Filmly)中挂载
+## 在 网易爆米花(原Filmly) 中挂载
 
 1. 添加新文件源，选择 `WebDAV` 协议
 
@@ -38,6 +39,12 @@
 
     ![](images/USAGE_TUTORIAL/FILMLY/2.JPG)
 
-1. 耐心等待搜刮资源，然后尽情享用~
+3. 耐心等待搜刮资源，然后尽情享用~
 
     ![](images/USAGE_TUTORIAL/FILMLY/3.JPG)
+
+## 在 OpenList(原Alist) 中挂载
+
+1. 没什么好说的，效果看图
+
+    ![](images/USAGE_TUTORIAL/OPENLIST/1.png)
