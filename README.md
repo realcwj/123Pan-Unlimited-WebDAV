@@ -1,5 +1,7 @@
 # [123云盘](https://www.123pan.com) 无限制挂载工具
 
+- 1.0.0 版本已发布：[>>> 点此进入 <<<](https://github.com/realcwj/123Pan-Unlimited-WebDAV/releases/tag/1.0.0)
+
 - 欢迎提 Pull Requests 和 功能建议 和 **详细的可复现的** Bug 反馈。
 
 ## 免责声明
@@ -52,6 +54,8 @@
   - [License](#license)
 
 ## 更新日志（自上而下、由新到旧）
+
+- 1.0.0 版本已发布：[>>> 点此进入 <<<](https://github.com/realcwj/123Pan-Unlimited-WebDAV/releases/tag/1.0.0)
 
 - 新增功能：按照Hash前两位划分一级目录，确保更新数据库后原有文件路径不变，避免重复刮削
 
