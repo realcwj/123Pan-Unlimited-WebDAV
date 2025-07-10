@@ -234,7 +234,7 @@ class Pan123:
         yield {"isFinish": True, "message": base64.urlsafe_b64encode(json.dumps(ALL_ITEMS, ensure_ascii=False).encode("utf-8")).decode("utf-8")}
 
 
-    def createFolder(self, parentFileId, folderName):
+    def createFolder(self, parentFileId, folderName, raw_data=False):
         # 由于爬虫爬取到的数据可能会将分享名重命名为英文符号，触发创建文件夹失败，所以需要将文件夹名中的特殊字符替换回中文符号
         folderName = folderName.replace(":", "：").replace("/", "／").replace("\\", "＼").replace("*", "＊").replace("?", "？")
         body = {
@@ -257,6 +257,8 @@ class Pan123:
                 json = body
             ).json()
             if response_data.get("code") == 0:
+                if raw_data:
+                    return {"isFinish": True, "message": response_data.get("data")}
                 fileId = response_data.get("data").get("Info").get("FileId")
                 logger.debug(f"创建文件夹成功: {folderName}, fileId: {fileId}")
                 # 返回文件夹Id
