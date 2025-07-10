@@ -51,6 +51,7 @@ class Pan123:
             "UploadCompleteV2": f"{MainApi}/file/upload_complete/v2",
             "S3Complete":       f"{MainApi}/file/s3_complete_multipart_upload",
             "ShareList":        f"{MainApi}/share/get",
+            "TrashDelete":      f"{MainApi}/file/delete",
         }
         # 返回对应操作的API地址, 如果不存在则返回None
         return apis.get(actionName, None)
@@ -302,26 +303,51 @@ class Pan123:
             logger.error(f"上传文件请求发生异常 (parentFileId: {parentFileId}, fileName: {fileName}): {e}", exc_info=True)
             return {"isFinish": False, "message": f"上传文件请求发生异常: {e}"}
     
-    def deleteFile(self, fileList):
-        body = {
+    def deleteFile(self, fileList, clearTrash=False):
+        trash_body = {
             "driveId": 0,
             "event": "intoRecycle",
             "operatePlace": 1,
 			"operation": True,
 			"fileTrashInfoList": fileList, # List[dict, ...]
         }
+        deleteIdList = []
+        for file in fileList:
+            deleteIdList.append({"fileId": file.get("FileId")})
+        delete_body = {
+            "fileIdList": deleteIdList,
+            "event": "recycleDelete",
+            "operatePlace": 1,
+            "RequestSource": None
+            }
         try:
             response_data = requests.post(
                 url = self.getActionUrl("Trash"),
                 headers = self.headers,
-                json = body
+                json = trash_body
             ).json()
             if response_data.get("code") == 0:
                 logger.debug(f"删除文件成功: {fileList}")
-                return {"isFinish": True, "message": "删除文件成功"}
+                if not clearTrash:
+                    return {"isFinish": True, "message": "删除文件成功"}
+                else:
+                    # 彻底删除文件（删除回收站里的文件）
+                    response_data = requests.post(
+                        url = self.getActionUrl("TrashDelete"),
+                        headers = self.headers,
+                        json = delete_body
+                    ).json()
+                    if response_data.get("code") == 7301:
+                        logger.debug(f"彻底删除文件成功: {fileList}")
+                        return {"isFinish": True, "message": "彻底删除文件成功"}
+                    else:
+                        logger.error(f"彻底删除文件失败: {json.dumps(response_data, ensure_ascii=False)}")
+                        return {"isFinish": False, "message": f"彻底删除文件失败：{response_data}"}
             else:
                 logger.error(f"删除文件失败: {json.dumps(response_data, ensure_ascii=False)}")
                 return {"isFinish": False, "message": f"删除文件失败：{response_data}"}
+                
+                
         except Exception as e:
             logger.error(f"删除文件请求发生异常: {e}", exc_info=True)
             return {"isFinish": False, "message": f"删除文件请求发生异常: {e}"}
