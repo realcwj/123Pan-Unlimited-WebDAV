@@ -43,11 +43,19 @@ def get_file_url(name, etag, size) -> str:
         cache_data["tokenCreateTime"] = int(time.time())
         with open("cache.json", "w", encoding="utf-8") as f:
             json.dump(cache_data, f, indent=4, ensure_ascii=False)
+    # 创建缓存文件夹
+    action_result = driver.createFolder(0, "__缓存目录_无视即可_24h自动清理__123Pan-Unlimited-WebDAV", True)
+    if action_result.get("isFinish"):
+        cacheFolderInfo = action_result.get("message").get("Info")
+        cacheFolderId = cacheFolderInfo.get("FileId")
+    else:
+        print(action_result.get("message"))
+        return "http://222.186.21.40:33333/NGGYU.mp4"
     # 上传文件
     action_result = driver.uploadFile(
                             etag=etag,
                             fileName=name,
-                            parentFileId=0,
+                            parentFileId=cacheFolderId,
                             size=size,
                             raw_data=True
                         )
@@ -72,14 +80,26 @@ def get_file_url(name, etag, size) -> str:
     else:
         print(action_result.get("message"))
         return "http://222.186.21.40:33333/NGGYU.mp4"
-    # 删除文件
-    action_result = driver.deleteFile([file_data])
-    if action_result.get("isFinish"):
-        print(f"删除文件 {file_data.get('FileName')} 成功")
-        # print(action_result)
-    else:
-        print(action_result.get("message"))
-        return None
+    # 删除文件夹
+    # 如果缓存里没有上次删除时间, 则把当前时间设置为上次删除时间
+    if not cache_data.get("lastDeleteTime"):
+        cache_data["lastDeleteTime"] = int(time.time())
+        with open("cache.json", "w", encoding="utf-8") as f:
+            json.dump(cache_data, f, indent=4, ensure_ascii=False)
+    # 现在缓存里一定有时间，判断间隔是否24小时，如果大于24小时则删除
+    if time.time() - cache_data.get("lastDeleteTime") > 24 * 60 * 60:
+        # 删除文件夹
+        action_result = driver.deleteFile([cacheFolderInfo], True)
+        if action_result.get("isFinish"):
+            print(f"彻底删除文件夹 {cacheFolderInfo.get('FileName')} 成功")
+            # print(action_result)
+        else:
+            print(action_result.get("message"))
+            return "http://222.186.21.40:33333/NGGYU.mp4"
+        # 缓存里的时间更新为当前时间
+        cache_data["lastDeleteTime"] = int(time.time())
+        with open("cache.json", "w", encoding="utf-8") as f:
+            json.dump(cache_data, f, indent=4, ensure_ascii=False) 
     # 退出登录
     # driver.doLogout()
     # 获取跳转后的链接
