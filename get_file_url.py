@@ -24,7 +24,7 @@ def get_file_url(name, etag, size) -> str:
                         )
     if action_result.get("isFinish"):
         file_data = action_result.get("message").get("Info")
-        # print(file_data)
+        # print(action_result.get("message").get("Info"))
     else:
         print(action_result.get("message"))
         return "http://222.186.21.40:33333/NGGYU.mp4"
@@ -44,9 +44,9 @@ def get_file_url(name, etag, size) -> str:
         print(action_result.get("message"))
         return "http://222.186.21.40:33333/NGGYU.mp4"
     # 删除文件
-    action_result = driver.deleteFile([file_data.get('Info')])
+    action_result = driver.deleteFile([file_data])
     if action_result.get("isFinish"):
-        pass
+        print(f"删除文件 {file_data.get('FileName')} 成功")
         # print(action_result)
     else:
         print(action_result.get("message"))
