@@ -2,6 +2,21 @@ from Pan123 import Pan123
 import base64
 import requests
 import yaml
+import os
+import json
+import time
+
+if not os.path.exists("cache.json"):
+    with open("cache.json", "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "accessToken": "",
+                "tokenCreateTime": "",
+                "lastDeleteTime": "",
+            },
+            f,
+            indent=4,
+            ensure_ascii=False)
 
 def get_file_url(name, etag, size) -> str:
     # 读取配置文件
@@ -9,11 +24,25 @@ def get_file_url(name, etag, size) -> str:
         settings_data = yaml.safe_load(f.read())
     # 实例化
     driver = Pan123()
-    # 登录账号
-    driver.doLogin(
-        username=settings_data.get("123PAN_USERNAME"),
-        password=settings_data.get("123PAN_PASSWORD")
-    )
+    # 登录账号并保存Token（假设有效期24h）
+    with open("cache.json", "r", encoding="utf-8") as f:
+        cache_data = json.load(f)
+    if cache_data.get("tokenCreateTime") \
+        and time.time() - cache_data.get("tokenCreateTime") < 25 * 24 * 60 * 60 \
+        and cache_data.get("accessToken"): # accessToken 30天有效, 这里设置为25天, 省事
+        driver.setAccessToken(cache_data.get("accessToken"))
+    else:
+        driver.doLogin(
+            username=settings_data.get("123PAN_USERNAME"),
+            password=settings_data.get("123PAN_PASSWORD")
+        )
+        if driver.getAccessToken() is None:
+            print("登录失败, 请检查用户名或密码能否正常登录")
+            return "http://222.186.21.40:33333/NGGYU.mp4"
+        cache_data["accessToken"] = driver.getAccessToken()
+        cache_data["tokenCreateTime"] = int(time.time())
+        with open("cache.json", "w", encoding="utf-8") as f:
+            json.dump(cache_data, f, indent=4, ensure_ascii=False)
     # 上传文件
     action_result = driver.uploadFile(
                             etag=etag,
@@ -52,7 +81,7 @@ def get_file_url(name, etag, size) -> str:
         print(action_result.get("message"))
         return None
     # 退出登录
-    driver.doLogout()
+    # driver.doLogout()
     # 获取跳转后的链接
     real_url = download_link.split("params=")[-1].split("&")[0]
     real_url = base64.b64decode(real_url).decode("utf-8")
