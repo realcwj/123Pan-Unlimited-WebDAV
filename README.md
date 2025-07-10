@@ -1,6 +1,6 @@
 # [123云盘](https://www.123pan.com) 无限制挂载工具
 
-- 1.0.0 版本已发布：[>>> 点此进入 <<<](https://github.com/realcwj/123Pan-Unlimited-WebDAV/releases/tag/1.0.0)
+- 1.0.1 版本已发布：[>>> 点此进入 <<<](https://github.com/realcwj/123Pan-Unlimited-WebDAV/releases/tag/1.0.1)
 
 - 欢迎提 Pull Requests 和 功能建议 和 **详细的可复现的** Bug 反馈。
 
@@ -54,6 +54,8 @@
   - [License](#license)
 
 ## 更新日志（自上而下、由新到旧）
+
+- 1.0.1 版本已发布：[>>> 点此进入 <<<](https://github.com/realcwj/123Pan-Unlimited-WebDAV/releases/tag/1.0.1)
 
 - 新增功能：支持取消拆分文件夹，将SPLIT_FOLDER参数修改为False即可
 
