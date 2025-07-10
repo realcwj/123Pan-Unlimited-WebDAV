@@ -1,9 +1,6 @@
 import sqlite3
 import os
 import requests
-import uuid
-import json
-import base64
 
 from tqdm import tqdm
 from utils import getStringHash, getSearchText
@@ -194,12 +191,11 @@ class Pan123Database:
             logger.debug(f"通过 codeHash '{codeHash}' 未查询到数据")
             return None
 
-    def listData(self, visibleFlag: bool = True, page: int = 1):
+    def listData(self, visibleFlag: bool = True, page: int = 1, limit: int = 100):
         # 只展示visibleFlag为True (公开且审核通过) 的数据
         # 返回 [(codeHash, rootFolderName, timeStamp), ...], is_end_page
         if page < 1:
             page = 1
-        limit = 100
         offset = (page - 1) * limit
 
         # 获取总记录数
@@ -427,7 +423,7 @@ class Pan123Database:
         except Exception as e:
             logger.error(f"更新 visibleFlag 失败 (codeHash: {codeHash}): {e}", exc_info=True)
             return False
-
+ 
     def updateRootFolderName(self, codeHash: str, newRootFolderName: str):
         # 更新 rootFolderName 时，需要同步更新 FTS 表中的 searchText
         # 获取 shareCode 以重新生成 searchText
@@ -480,11 +476,6 @@ if __name__ == "__main__":
 
     db = Pan123Database(dbpath="./assets/PAN123DATABASE.db")
 
-    # 生成 Json
-    json_data = db.makeFullJson()
-    
-    print(json_data) 
-    
     # 从 ./export 导入文件 (兼容旧版)
     # db.importShareFiles(folder_path="./export")
     
@@ -503,16 +494,16 @@ if __name__ == "__main__":
     
     # print(end_page)
 
-    # logger.info("\n\n--- 测试 searchDataByName ---\n")
+    logger.info("\n\n--- 测试 searchDataByName ---\n")
     
-    # search_results, end_page = db.searchDataByName("柏林", page=1, visible_flag=True)
+    search_results, end_page = db.searchDataByName("柏林", page=1, visible_flag=True)
 
-    # if search_results:
-    #     for item in search_results:
-    #         logger.info(str(item))
-    # else:
-    #     logger.info("未找到匹配的资源")
+    if search_results:
+        for item in search_results:
+            logger.info(str(item))
+    else:
+        logger.info("未找到匹配的资源")
 
-    # print(end_page)
+    print(end_page)
 
     db.close()
