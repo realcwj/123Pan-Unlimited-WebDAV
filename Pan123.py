@@ -104,6 +104,13 @@ class Pan123:
             self.accessToken = None
             return None
     
+    def setAccessToken(self, token):
+        self.accessToken = token
+        self.headers["authorization"] = f"Bearer {self.accessToken}"
+    
+    def getAccessToken(self):
+        return self.accessToken
+    
     def doLogout(self):
         # 注销操作
         # 发送注销请求
